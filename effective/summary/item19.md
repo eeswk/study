@@ -14,73 +14,120 @@ API문서의 메서드 설명 @implSpec 태그 사용
  -tag "implSpec:a:implementation Requirements:"를 지정
 ~~~
 
+자바8
 ~~~~java
-/**
- * {@inheritDoc}
- *
- * <p>This implementation iterates over the collection looking for the
- * specified element.  If it finds the element, it removes the element
- * from the collection using the iterator's remove method.
- *
- * <p>Note that this implementation throws an
- * <tt>UnsupportedOperationException</tt> if the iterator returned by this
- * collection's iterator method does not implement the <tt>remove</tt>
- * method and this collection contains the specified object.
- *
- * @throws UnsupportedOperationException {@inheritDoc}
- * @throws ClassCastException            {@inheritDoc}
- * @throws NullPointerException          {@inheritDoc}
- */
-public boolean remove(Object o) {
-    Iterator<E> it = iterator();
-    if (o==null) {
-        while (it.hasNext()) {
-            if (it.next()==null) {
-                it.remove();
-                return true;
-            }
-        }
-    } else {
-        while (it.hasNext()) {
-            if (o.equals(it.next())) {
-                it.remove();
-                return true;
-            }
-        }
-    }
-    return false;
+public abstract class AbstractCollection<E> implements Collection<E> {
+  /**
+   * {@inheritDoc}
+   *
+   * <p>This implementation iterates over the collection looking for the
+   * specified element.  If it finds the element, it removes the element
+   * from the collection using the iterator's remove method.
+   *
+   * <p>Note that this implementation throws an
+   * <tt>UnsupportedOperationException</tt> if the iterator returned by this
+   * collection's iterator method does not implement the <tt>remove</tt>
+   * method and this collection contains the specified object.
+   *
+   * @throws UnsupportedOperationException {@inheritDoc}
+   * @throws ClassCastException            {@inheritDoc}
+   * @throws NullPointerException          {@inheritDoc}
+   */
+  public boolean remove(Object o) {
+      Iterator<E> it = iterator();
+      if (o==null) {
+          while (it.hasNext()) {
+              if (it.next()==null) {
+                  it.remove();
+                  return true;
+              }
+          }
+      } else {
+          while (it.hasNext()) {
+              if (o.equals(it.next())) {
+                  it.remove();
+                  return true;
+              }
+          }
+      }
+      return false;
+  }
 }
 ~~~~
-
+자바11 @implSpec
+~~~java
+public abstract class AbstractCollection<E> implements Collection<E> {
+  /**
+   * {@inheritDoc}
+   *
+   * @implSpec
+   * This implementation iterates over the collection looking for the
+   * specified element.  If it finds the element, it removes the element
+   * from the collection using the iterator's remove method.
+   *
+   * <p>Note that this implementation throws an
+   * {@code UnsupportedOperationException} if the iterator returned by this
+   * collection's iterator method does not implement the {@code remove}
+   * method and this collection contains the specified object.
+   *
+   * @throws UnsupportedOperationException {@inheritDoc}
+   * @throws ClassCastException            {@inheritDoc}
+   * @throws NullPointerException          {@inheritDoc}
+   */
+  public boolean remove(Object o) {
+      Iterator<E> it = iterator();
+      if (o==null) {
+          while (it.hasNext()) {
+              if (it.next()==null) {
+                  it.remove();
+                  return true;
+              }
+          }
+      } else {
+          while (it.hasNext()) {
+              if (o.equals(it.next())) {
+                  it.remove();
+                  return true;
+              }
+          }
+      }
+      return false;
+  }
+}
+~~~
 클래스의 내부 동작 과정 중간에 끼어들 수 있는 훅(hook)을 잘 선별하여 protected 메서드 형태로 공개해야할 수도 있다.
 ~~~~java
+public abstract class AbstractList<E> extends AbstractCollection<E> implements List<E> {
+
 /**
- * Removes from this list all of the elements whose index is between
- * {@code fromIndex}, inclusive, and {@code toIndex}, exclusive.
- * Shifts any succeeding elements to the left (reduces their index).
- * This call shortens the list by {@code (toIndex - fromIndex)} elements.
- * (If {@code toIndex==fromIndex}, this operation has no effect.)
- *
- * <p>This method is called by the {@code clear} operation on this list
- * and its subLists.  Overriding this method to take advantage of
- * the internals of the list implementation can <i>substantially</i>
- * improve the performance of the {@code clear} operation on this list
- * and its subLists.
- *
- * <p>This implementation gets a list iterator positioned before
- * {@code fromIndex}, and repeatedly calls {@code ListIterator.next}
- * followed by {@code ListIterator.remove} until the entire range has
- * been removed.  <b>Note: if {@code ListIterator.remove} requires linear
- * time, this implementation requires quadratic time.</b>
- *
- * @param fromIndex index of first element to be removed
- * @param toIndex index after last element to be removed
- */
-protected void removeRange(int fromIndex, int toIndex) {
-    ListIterator<E> it = listIterator(fromIndex);
-    for (int i=0, n=toIndex-fromIndex; i<n; i++) {
-        it.next();
-        it.remove();
+     * Removes from this list all of the elements whose index is between
+     * {@code fromIndex}, inclusive, and {@code toIndex}, exclusive.
+     * Shifts any succeeding elements to the left (reduces their index).
+     * This call shortens the list by {@code (toIndex - fromIndex)} elements.
+     * (If {@code toIndex==fromIndex}, this operation has no effect.)
+     *
+     * <p>This method is called by the {@code clear} operation on this list
+     * and its subLists.  Overriding this method to take advantage of
+     * the internals of the list implementation can <i>substantially</i>
+     * improve the performance of the {@code clear} operation on this list
+     * and its subLists.
+     *
+     * @implSpec
+     * This implementation gets a list iterator positioned before
+     * {@code fromIndex}, and repeatedly calls {@code ListIterator.next}
+     * followed by {@code ListIterator.remove} until the entire range has
+     * been removed.  <b>Note: if {@code ListIterator.remove} requires linear
+     * time, this implementation requires quadratic time.</b>
+     *
+     * @param fromIndex index of first element to be removed
+     * @param toIndex index after last element to be removed
+     */
+    protected void removeRange(int fromIndex, int toIndex) {
+        ListIterator<E> it = listIterator(fromIndex);
+        for (int i=0, n=toIndex-fromIndex; i<n; i++) {
+            it.next();
+            it.remove();
+        }
     }
 }
 ~~~~
