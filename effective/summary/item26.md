@@ -184,8 +184,8 @@ _핵심정리_
 >- Set<Object>와 Set<?>은 안전하지만 Set은 안전하지 않다.
 
 용어정리
-|<center>한글용어</center> |  <center>영문용어</center> |  <center>예</center> |
-|:--------|:--------:|--------:|
+|한글용어|영문용어|예 |
+|:--------|:--------:|:--------|
 |매개변수화 타입 | parameterized type |List<String>|
 |실제 타입 매개변수| actual type parameter |String|
 |제네릭 타입 | generic type |List<E>|
