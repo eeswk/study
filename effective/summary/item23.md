@@ -1,12 +1,16 @@
 #### 태그 달린 클래스보다는 클래스 계층구조를 활용하라
 
+> 두가지 이상의 의미를 표현할 수 있으며,
 > 현재 표현하는 의미를 태그값으로 알려주는 클래스
+
+태그 달린 클래스 - 하나의 클래스가 2가지 이상의 기능으로 동작할 때, 어떤 기능으로 동작할지를 필드값으로 구분하는 클래스
 
 ```java
 package effect.item23;
 
 public class Figure {
     enum Shape { RECTANGLE, CIRCLE};
+
     // 태그필드 - 현재 모양을 나태냄
     final Shape shape;
     // 사각형일때만 쓰인다.
