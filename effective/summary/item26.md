@@ -54,7 +54,7 @@ List 같은 로 타입은 사용해서는 안되나, List\<Object> 처럼 임의
 
 List와 List\<Object> 차이점?
 
-List는 제네릭 타입에서 완전히 발을 뺀것.
+List는 제네릭 타입에서 완전히 발을 뺀것.\
 List\<Object>는 모든 타입을 허용
 
 ```java
