@@ -14,7 +14,7 @@ String이 정규(formal) 타입 매개변수 E에 해당하는 실제(actual) �
 제네릭 타입을 하나 정의하면 그에 딸린 로 타입(raw type)도 함께 정의된다.
 로 타입이란?
 제네릭 타입에서 타입 매개변수를 전혀 사용하지 않을 때를 말한다.
-List<E>의 로 타입은 List다.
+List\<E>의 로 타입은 List다.
 
 제네릭이 지원하기 전에 컬렉션 사용시
 ```java
@@ -50,12 +50,12 @@ for (Stamp s : stamps) {
 ```
 **로 타입(raw type)을 쓰면 제네릭이 안겨주는 안정상과 표현력을 모두 잃게 된다.**
 
-List 같은 로 타입은 사용해서는 안되나, List<Object> 처럼 임의 객체를 허용하는 매개변수화 타입은 괜찮다.
+List 같은 로 타입은 사용해서는 안되나, List\<Object> 처럼 임의 객체를 허용하는 매개변수화 타입은 괜찮다.
 
-List와 List<Object> 차이점?
+List와 List\<Object> 차이점?
 
 List는 제네릭 타입에서 완전히 발을 뺀것.
-List<Object>는 모든 타입을 허용
+List\<Object>는 모든 타입을 허용
 
 ```java
 package effect.item26;
@@ -120,7 +120,7 @@ static int numElementsInCommon(Set s1, Set s2) {
 
 그렇다면, 비한정적 와일드카드 타입(unbounded wildcard type)을 대신 사용하는게 좋다.
 제네릭 타입을 쓰고 싶지만 실제 타입 매개변수가 무엇인지 신경 쓰고 싶지 않다면 물음표(?)를 사용한다.
-제네릭 타입인 Set<E>의 비한정적 와일드 카드 타입은 Set<?>이다.
+제네릭 타입인 Set\<E>의 비한정적 와일드 카드 타입은 Set\<?>이다.
 어떤 타입이라도 담을 수 있는 가장 범용적인 매개변수화 Set 타입이다.
 
 ```java
@@ -158,7 +158,7 @@ Error:(43, 20) java: incompatible types: effect.item26.Coin cannot be converted 
 **class 리터럴에는 로 타입을 써야 한다.**
 자바 명세는 class 리터럴에 매개변수화 타입을 사용하지 못하게 했다.(배열과 기본 타입은 허용한다)
 
-List.class, String[].class, int.class는 허용하고 List<String>.class와 List<?>.class는 허용하지 않는다.
+List.class, String[].class, int.class는 허용하고 List\<String>.class와 List<?>.class는 허용하지 않는다.
 
 instanceof 연산자와 관련
 런타임에는 제네릭 타입 정보가 지워지므로 instanceof 연산자는 비한정적 와일드카드 타입 이외의 매개변수화 타입에는 적용할 수 없다.
@@ -178,26 +178,26 @@ o 타입이 Set임을 확인한 다음 와일드카드 타입인 Set<?>로 형�
 _핵심정리_
 > - 로 타입을 사용하면 런타임 예외가 일어날 수 있으니 사용하면 안된다.
 > - 로타입은 제네릭이 도입되기 이전 코드와의 호환성을 위해 제공될 뿐이다.
-> - Set<Object>는 어떤 타입의 객체도 저장할 수 있는 매개변수화 타입이고,
+> - Set\<Object>는 어떤 타입의 객체도 저장할 수 있는 매개변수화 타입이고,
 > - Set<?>는 모종의 타입 객체만 저장할 수 있는 와일드 카드 타입이다.
 > - Set (로 타입)은 제네릭 타입 시스템에 속하지 않는다.
-> - Set<Object>와 Set<?>은 안전하지만 Set은 안전하지 않다.
-
+> - Set\<Object>와 Set<?>은 안전하지만 Set은 안전하지 않다.
+---
 
 용어정리
 
 한글용어|영문용어|예
---------|--------:|--------
+--------|--------|--------
 매개변수화 타입 | parameterized type |List<String>
 실제 타입 매개변수| actual type parameter | String
-제네릭 타입 | generic type | List<E>
+제네릭 타입 | generic type | Lis\<E>
 정규타입 매개 타입 | formal type parameter | E
 비한정적 와일드카드 타입 | unbounded wildcard type | List<?>
 로 타입 | raw type | List
-한정적 타입 매개변수 | bounded type parameter | <E extends Number>
+한정적 타입 매개변수 | bounded type parameter | \<E extends Number>
 재귀적 타입 한정| recursive type bound | <T extends Comparable<T>>
 한정적 와일드카드 타입| bounded wildcard type | List<? extends Number>
-제네릭 메서드| generic method | static <E> List<E> asList(E[] a)
+제네릭 메서드| generic method | static \<E> List\<E> asList(E[] a)
 타입 토큰 | type token |String.class
 
 [참조] (이펙티브 자바 3판)
