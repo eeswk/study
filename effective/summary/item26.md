@@ -188,14 +188,14 @@ _핵심정리_
 
 한글용어|영문용어|예
 --------|--------|--------
-매개변수화 타입 | parameterized type |List<String>
+매개변수화 타입 | parameterized type |List\<String>
 실제 타입 매개변수| actual type parameter | String
-제네릭 타입 | generic type | Lis\<E>
+제네릭 타입 | generic type | List\<E>
 정규타입 매개 타입 | formal type parameter | E
 비한정적 와일드카드 타입 | unbounded wildcard type | List<?>
 로 타입 | raw type | List
 한정적 타입 매개변수 | bounded type parameter | \<E extends Number>
-재귀적 타입 한정| recursive type bound | <T extends Comparable<T>>
+재귀적 타입 한정| recursive type bound | \<T extends Comparable\<T>>
 한정적 와일드카드 타입| bounded wildcard type | List<? extends Number>
 제네릭 메서드| generic method | static \<E> List\<E> asList(E[] a)
 타입 토큰 | type token |String.class
